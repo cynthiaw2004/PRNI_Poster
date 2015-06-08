@@ -1,0 +1,201 @@
+% this style was created by Philippe Dreuw and Thomas Deselaers
+\ProvidesPackage{beamerthemeDreuw} 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\RequirePackage{tangocolors}
+\RequirePackage{url}
+\RequirePackage{tikz}
+\selectcolormodel{cmyk}
+\mode<presentation>
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\setbeamercolor{headline}{fg=skyblue3,bg=aluminium2}
+\setbeamercolor{footline}{fg=aluminium2, bg=aluminium2}
+\setbeamerfont{footline}{size=\large,series=\tt}
+\setbeamercolor{separation line}{bg=scarletred1}
+\setbeamercolor{title in headline}{fg=scarletred2}
+\setbeamercolor{author in headline}{fg=aluminium6}
+\setbeamercolor{institute in headline}{fg=ta7skyblue}
+
+\setbeamercolor{framesubtitle}{fg=scarletred2, bg=ta2gray}
+\setbeamercolor{author in head/foot}{fg=scarletred2, bg=aluminium3}
+\setbeamercolor{title in head/foot}{fg=scarletred2, bg=aluminium3}
+
+\setbeamercolor*{normal text}{fg=black, bg=ta3aluminium}
+\setbeamercolor*{block body}{fg=black}
+\setbeamercolor*{block title}{fg=ta7skyblue,bg=ta4skyblue}
+\setbeamerfont*{block title}{size=\Large,series=\bf}
+\setbeamercolor{upper separation line head}{fg=ta2orange}
+
+\setbeamercolor*{example body}{fg=ta3aluminium,bg=black}
+\setbeamercolor*{example text}{fg=ta3aluminium,bg=black}
+\setbeamercolor*{example title}{bg=taorange,fg=ta2gray}
+
+\setbeamercolor{alerted text}{fg=ta3gray}
+
+%\setbeamercolor{example text}{fg=taorange}
+\setbeamercolor{structure}{fg=ta4skyblue}
+
+\setbeamertemplate{itemize items}[triangle]
+\setbeamertemplate{navigation symbols}{}  % no navigation on a poster
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\setbeamertemplate{background}{%
+    \parbox[c][\paperheight]{\paperwidth}{%
+        \vfill \hfill
+%        \include{diagram}
+% \includegraphics[width=\paperwidth]{BigDragon.pdf}
+         \hfill \vfill
+      }}
+
+%%
+%% This is the block environment that gives transparant blocks
+%%
+\newenvironment{transbox}[1][ta3aluminium]{
+\begin{tikzpicture}
+\node[text width=1\textwidth, fill opacity=0.85, text opacity=1,
+fill=#1, rounded corners, text=black, draw=ta7skyblue] \bgroup%
+}{\egroup;\end{tikzpicture}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%
+%% Block style
+%%
+\newlength{\blocktitleheight}\settoheight{\blocktitleheight}{ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890}
+\setlength{\blocktitleheight}{7\blocktitleheight}
+\setbeamertemplate{block begin}{
+  \begin{transbox} % Make background transparent
+    \vspace{3mm}
+    \begin{center}\begin{tikzpicture}
+      \node[text width=0.97\textwidth,inner sep=3mm,fill=ta3aluminium,draw=ta7skyblue,text=ta2skyblue,rounded corners,minimum height=\blocktitleheight] {\usebeamerfont*{block title}\insertblocktitle};
+    \end{tikzpicture}\end{center}
+    \vspace{3mm}
+    \begin{beamercolorbox}[leftskip=0.015\textwidth]{block body}
+    \usebeamerfont*{block body}
+    \usebeamercolor*{block body}
+}
+    % Content goes here
+\setbeamertemplate{block end}{
+    \end{beamercolorbox}
+  \end{transbox}
+  \vspace{-1em}
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% \setbeamertemplate{block begin}{
+%   \vskip.75ex
+%   \begin{beamercolorbox}[rounded=true,shadow=true,leftskip=1cm,colsep*=.75ex]{block title}%
+%     \usebeamerfont*{block title}\insertblocktitle
+%   \end{beamercolorbox}%
+%   {\ifbeamercolorempty[bg]{block body}{}{\nointerlineskip\vskip-0.5pt}}%
+%   \usebeamerfont{block body}%
+%   \begin{beamercolorbox}[rounded=true,shadow=true,colsep*=.75ex,sep=.75ex,vmode]{block body}%
+%     \ifbeamercolorempty[bg]{block body}{\vskip-.25ex}{\vskip-.75ex}\vbox{}%
+%   }
+%   \setbeamertemplate{block end}{
+%   \end{beamercolorbox}
+% }
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\setbeamertemplate{headline}{  
+  \leavevmode
+  \begin{beamercolorbox}[wd=\paperwidth]{headline}
+    \begin{columns}[T]
+%\iftrue
+
+      \begin{tikzpicture}[remember picture]
+        \node[anchor=south west,inner sep=0] (txt) at (0,0){
+      \begin{column}{.00\paperwidth}
+      \end{column}
+      \begin{column}{.2\paperwidth}
+        \begin{center}
+          \vskip1cm
+          \includegraphics[width=.8\linewidth]{logos/MRNlogo2c}
+          \vskip0.8cm
+        \end{center}
+        \vskip1ex
+      \end{column}
+%\fi
+      \begin{column}{.6\paperwidth}
+        \vskip4ex
+        \raggedleft
+        \usebeamercolor{title in headline}{\color{fg}\textbf{\LARGE{\inserttitle}}\\[1ex]}
+        \usebeamercolor{author in headline}{\color{fg}\large{\insertauthor}\\[1ex]}
+        \usebeamercolor{institute in headline}{\color{fg}\large{\insertinstitute}\\[1ex]}     
+      \end{column}
+      \begin{column}{.2\paperwidth}
+        \vskip1cm
+        \begin{center}
+          \vskip2cm
+          \includegraphics[width=.8\linewidth]{logos/UNM_Logo_Sp_Horiz_CMYK}
+          \vskip2.5cm
+        \end{center}
+        \vskip1cm
+      \end{column}
+      %\begin{column}{.03\paperwidth}
+      %\end{column}
+    };
+%    \node at (txt.north) {\includegraphics[width=.3\linewidth]{posterheader50}};
+      \end{tikzpicture}
+    \end{columns}
+  \end{beamercolorbox}
+
+  \begin{beamercolorbox}[wd=\paperwidth]{lower separation line head}
+    \rule{0pt}{2pt}
+  \end{beamercolorbox}
+}
+
+%  \setbeamertemplate{headline}{  
+%    \leavevmode
+%    \begin{beamercolorbox}[sep=0.5cm,wd=.8\paperwidth]{headline}
+%      \usebeamercolor{title in headline}{\raggedleft\color{fg}\textbf{\LARGE{\inserttitle}}\\[1ex]}
+%      \usebeamercolor{author in headline}{\raggedleft\color{fg}\large{\insertauthor}\\[1ex]}
+%      \usebeamercolor{institute in headline}{\raggedleft\color{fg}\large{\insertinstitute}\\[1ex]}     
+%    \end{beamercolorbox}%
+%    \begin{beamercolorbox}[wd=.2\paperwidth]{logo in headline}
+%      \centering
+%      \LARGE{LOGO}
+%    \end{beamercolorbox}  
+
+
+%}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\setbeamertemplate{footline}{
+  \begin{beamercolorbox}[wd=\paperwidth]{upper separation line foot}
+    \rule{0pt}{2pt}
+  \end{beamercolorbox}
+  
+  \leavevmode%
+  \begin{beamercolorbox}[ht=4ex,leftskip=1cm,rightskip=1cm]{author in head/foot}%
+    \url{http://mrn.org}
+    \hfill
+    \sf{\bf\sc {\color{ta6skyblue}NIH/NIBIB: 2R01
+        EB000840-06, NSF: 0705681} }
+    \hfill
+    \texttt{s.m.plis@gmail.com}
+    \vskip1ex
+  \end{beamercolorbox}
+  \vskip0pt%
+  \begin{beamercolorbox}[wd=\paperwidth]{lower separation line foot}
+    \rule{0pt}{2pt}
+  \end{beamercolorbox}
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Display a grid to help align images ... and it looks nice with this color scheme
+%\beamertemplategridbackground[10cm]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\mode<all>
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-PDF-mode: t
+%%% TeX-master: "poster"
+%%% End: 
