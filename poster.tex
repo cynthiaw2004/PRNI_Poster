@@ -13,6 +13,13 @@
   \usepackage[latin1]{inputenc}
   \usepackage[orientation=portrait,size=a0,scale=1.4,debug]{beamerposter}
   \usepackage{tikz}
+  \usepackage[linesnumbered,ruled,vlined]{algorithm2e}
+  \usepackage{stmaryrd}
+  \usepackage{floatrow}
+  \usepackage{wrapfig}
+  \usepackage{float}
+
+
 
 \def\mbf{\mathbf}
 \def\mc{\mathcal}
@@ -121,17 +128,73 @@ al.]{D. Danks, S.M. Plis, C. Freeman, A. Caprihan, V. D.  Calhoun} \institute[]{
         \end{block}
 
         \begin{block}{\Large How to Overcome the Problems}
-          \raggedright  
-          \begin{itemize}
-          \item put figure 1 here and describe succinctly 
-          \end{itemize}
+          \begin{minipage}{0.5\textwidth}
+            %\raggedleft
+            \LinesNumberedHidden
+            \SetKwProg{myalg}{Algorithm}{}{}
+            \myalg{RecursiveEqClass}{
+
+            \KwIn{${\cal H}$}
+            \KwOut{$\llbracket{\cal H}\rrbracket$}
+
+            initialize empty graph ${\cal G}$
+            and set $S$
+
+            \BlankLine
+            \Begin($EdgeAdder$ $ {\cal G}^*, {\cal H}, L $) {
+              \If{$L$ has elements}
+              {
+                \ForAll{edges in $L$}{
+                  \If{edge creates a conflict}
+                  { remove it from $L$ }
+                }
+                \If{$L$ has elements}
+                {
+                  \ForAll{edges in $L$}{
+                    add the edge to ${\cal G}^*$
+
+                    \If{$\exists {\cal G} \in \{({\cal G}^*)^u\} \text{ s.t. } {\cal
+                        G} = {\cal H}$}
+                    { 
+                      add ${\cal G}^*$ to $S$
+                    }
+                    $EdgeAdder$ ${\cal G}^*, {\cal H},
+                    L\setminus\text{the edge}$
+
+                    remove the edge from ${\cal G}^*$
+                  }
+                }
+                
+              }
+            }
+
+            \BlankLine
+            put all $n^2$ edges into list $L$
+
+            $EdgeAdder({\cal G},{\cal H}, L)$
+
+            \Return $S$
+          }
+        \end{minipage} %
+        \begin{minipage}{0.4\textwidth}
+          \centerline{\includegraphics{recursive_tree}}
+          %\includegraphics[width=\linewidth]{recursive_tree}
+        \end{minipage}
+
+
+
+        \begin{minipage}{.9\textwidth}
+        \vspace{5 mm}
+          Start with an empty graph and $n^2$  possible edges. For each edge $e$, construct a graph ${\cal G}$ containing only $e$. If ${\cal G}^{u} \nsubseteq {\cal  H}$  for all $u$, then reject; else if ${\cal G}^{u} = {\cal  H}$ for some $u$, then add ${\cal G}$ to $\llbracket{\cal H}\rrbracket$; else, recurse into non-conflicting graphs in order.
+        \end{minipage}% 
         \end{block}
+  
   
 
       \end{column}
       \begin{column}{.48\linewidth}
         \begin{block}{\Large Synthetic Data}
-          \raggedright Talk about results and include pictures: \vskip5cm
+          \raggedright Talk about results and include pictures (which Sergey will tell which to include): \vskip5cm
 
          NOTE: do not forget UNM and CMU logo (already added to logo folder but not sure where to place in poster)
 
