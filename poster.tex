@@ -69,7 +69,7 @@
   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%5
 \title[Fancy  Posters]{Successfully learning networks from undersampled neuroimaging data}  
 \author[Plis et
-al.]{D. Danks, S.M. Plis, C. Freeman, A. Caprihan, V. D.  Calhoun} \institute[]{  Carnegie Mellon University,  The
+al.]{D. Danks, S.M. Plis, C. Freeman, A. Caprihan, Eswar Damaraju, V. D.  Calhoun} \institute[]{  Carnegie Mellon University,  The
   Mind Research Network}
   %\date{}
 
@@ -111,8 +111,10 @@ al.]{D. Danks, S.M. Plis, C. Freeman, A. Caprihan, V. D.  Calhoun} \institute[]{
            
           \item \textbf{Undersampling}: Measurement timescale significantly slower than
           causal or communication timescale 
-          \begin{itemize} \item Intermediate time points are unobserved \end{itemize}
+          \begin{itemize} \item Intermediate time points are unobserved \end{itemize} %figure here that sergey wants
           
+          \includegraphics[scale = 2.1]{undersample}
+
           \item Granger causality can be arbitrarily wrong given undersampling
           \begin{itemize}
             \item $X$ GC $Y$ even though $Y$ actually causes $X$
@@ -200,7 +202,8 @@ al.]{D. Danks, S.M. Plis, C. Freeman, A. Caprihan, V. D.  Calhoun} \institute[]{
         \begin{block}{\Large Synthetic Data}
         %\raggedright
           \begin{minipage}{1\textwidth}
-          \includegraphics[scale = 1.1]{fig9_MSL}
+          %\includegraphics[scale = 1.1]{fig9_MSL}
+          \includegraphics[scale = 2.2]{fig9_MSL_transparent}
         \end{minipage} %
 
         \begin{minipage}{.95\textwidth}
@@ -210,7 +213,8 @@ al.]{D. Danks, S.M. Plis, C. Freeman, A. Caprihan, V. D.  Calhoun} \institute[]{
 
         \begin{minipage}{1\textwidth}
                 \vspace{5 mm}
-          \includegraphics[scale = 1.57]{figure_6_RASL}
+          %\includegraphics[scale = 1.57]{figure_6_RASL}
+          \includegraphics[scale = 2]{figure_6_RASL_transparent}
         \end{minipage} %
 
         \begin{minipage}{.95\textwidth}
@@ -220,7 +224,9 @@ al.]{D. Danks, S.M. Plis, C. Freeman, A. Caprihan, V. D.  Calhoun} \institute[]{
        
         \begin{minipage}{1\textwidth}
                 \vspace{5 mm}
-          \includegraphics[scale=1.07]{RASL_simulations_6nodes_u2}
+          %\includegraphics[scale=1.07]{RASL_simulations_6nodes_u2}
+          \includegraphics[scale=1.27]{RASL_simulations_6nodes_u2_transparent}
+
         \end{minipage} %
 
         \begin{minipage}{.95\textwidth}
@@ -228,24 +234,24 @@ al.]{D. Danks, S.M. Plis, C. Freeman, A. Caprihan, V. D.  Calhoun} \institute[]{
            The estimation and search errors on synthetic data undersampled at rate $2$. 
         \end{minipage}% 
         \end{block}
-        
-        \begin{block}{\Large FMRI Data}
-          \raggedright Talk about results and include pictures: \vskip5cm
-          \vskip5.5cm
-        \end{block}
 
         \begin{block}{\Large Conclusions}
-          \raggedright Conclude stuff here
+          \raggedright We have shown that undersampling leads to incorrect estimation of causal interactions. We have solved the forward problem and provided methods to generate undersampled graph from the ground truth. More importantly, we have solved the inverse problem and provided efficient algorithms both for known and unknown undersampling rates.  We discovered that very often equivalence classes of estimated graphs often are singletons - a useful property for post-hoc results analysis in practical applications. We have evidence that our method can further be used to correct  statistical estimation errors in standard within time-scale algorithms.
         \end{block}
         \begin{block}{References}
           \raggedright
           \footnotesize
           \begin{thebibliography}{2}
             \raggedright
-          \bibitem[Sarwate et a.(2014)]{SarwateFrontiers2014}
-            Authors
-            \newblock Title
-            \newblock In \emph{Journal}, year.
+          \bibitem
+             GGranger, C.W.J.
+            \newblock Investigating causal relations by econometric models and cross-spectral methods.
+            \newblock In \emph{Econometrica}, 37(3), 424-438,1969.
+          \bibitem
+             PPlis S.M., Danks D., Yang J.
+            \newblock Mesochronal structure learning
+            \newblock In \emph{Proceedings of the Thirty-First Conference Annual Conference
+  on Uncertainty in Artificial Intelligence (UAI-15)}, 2015.
           \end{thebibliography}
         \end{block}
       \end{column}
