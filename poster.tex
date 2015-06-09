@@ -130,6 +130,7 @@ al.]{D. Danks, S.M. Plis, C. Freeman, A. Caprihan, V. D.  Calhoun} \institute[]{
         \begin{block}{\Large How to Overcome the Problems}
           \begin{minipage}{0.5\textwidth}
             %\raggedleft
+            \vspace{10 mm}
             \LinesNumberedHidden
             \SetKwProg{myalg}{Algorithm}{}{}
             \myalg{RecursiveEqClass}{
@@ -177,14 +178,14 @@ al.]{D. Danks, S.M. Plis, C. Freeman, A. Caprihan, V. D.  Calhoun} \institute[]{
           }
         \end{minipage} %
         \begin{minipage}{0.4\textwidth}
-          \centerline{\includegraphics{recursive_tree}}
+          \centerline{\includegraphics[scale = 1.8]{recursive_tree}}
           %\includegraphics[width=\linewidth]{recursive_tree}
         \end{minipage}
 
 
 
         \begin{minipage}{.9\textwidth}
-        \vspace{5 mm}
+        \vspace{20 mm}
           Start with an empty graph and $n^2$  possible edges. For each edge $e$, construct a graph ${\cal G}$ containing only $e$. If ${\cal G}^{u} \nsubseteq {\cal  H}$  for all $u$, then reject; else if ${\cal G}^{u} = {\cal  H}$ for some $u$, then add ${\cal G}$ to $\llbracket{\cal H}\rrbracket$; else, recurse into non-conflicting graphs in order.
         \end{minipage}% 
         \end{block}
@@ -192,16 +193,40 @@ al.]{D. Danks, S.M. Plis, C. Freeman, A. Caprihan, V. D.  Calhoun} \institute[]{
   
 
       \end{column}
+      %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
       \begin{column}{.48\linewidth}
+
+
         \begin{block}{\Large Synthetic Data}
-          \raggedright Talk about results and include pictures (which Sergey will tell which to include): \vskip5cm
+        %\raggedright
+          \begin{minipage}{1\textwidth}
+          \includegraphics[scale = 1.1]{fig9_MSL}
+        \end{minipage} %
 
-         NOTE: do not forget UNM and CMU logo (already added to logo folder but not sure where to place in poster)
+        \begin{minipage}{.95\textwidth}
+        \vspace{5 mm}
+           Graphs with $15$, $20$ ,$25$, $30$, and $35$ nodes at the density of $10\%$, their corresponding ${\cal G}^{2}$ and equivalence class size distribution as well as the running time summarizing the computation of $100$ random SCCs per node size
+        \end{minipage}% 
 
-          %\begin{tikzpicture}[overlay]
-          %  \node[xshift=19cm] {\includegraphics[width=1\linewidth]{eqclass_size}};
-          %\end{tikzpicture}
-          \vskip5.5cm
+        \begin{minipage}{1\textwidth}
+                \vspace{5 mm}
+          \includegraphics[scale = 1.57]{figure_6_RASL}
+        \end{minipage} %
+
+        \begin{minipage}{.95\textwidth}
+        \vspace{5 mm}
+           The above plots the size of $\llbracket{\cal H}\rrbracket$ as a function of $u$ for $100$ random $5$-node SCCs with $25\%$ density,  each  of  which   was undersampled  for $u \in \{ 2 , \ldots , 11 \}$. 
+        \end{minipage}% 
+       
+        \begin{minipage}{1\textwidth}
+                \vspace{5 mm}
+          \includegraphics[scale=1.07]{RASL_simulations_6nodes_u2}
+        \end{minipage} %
+
+        \begin{minipage}{.95\textwidth}
+        \vspace{5 mm}
+           The estimation and search errors on synthetic data undersampled at rate $2$. 
+        \end{minipage}% 
         \end{block}
         
         \begin{block}{\Large FMRI Data}
