@@ -60,7 +60,8 @@
 \tikzstyle{na} = [baseline=-.5ex]
 
   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%5
-\title[Fancy  Posters]{Successfully learning networks from undersampled neuroimaging data}  \author[Plis et
+\title[Fancy  Posters]{Successfully learning networks from undersampled neuroimaging data}  
+\author[Plis et
 al.]{D. Danks, S.M. Plis, C. Freeman, A. Caprihan, V. D.  Calhoun} \institute[]{  Carnegie Mellon University,  The
   Mind Research Network}
   %\date{}
@@ -71,16 +72,54 @@ al.]{D. Danks, S.M. Plis, C. Freeman, A. Caprihan, V. D.  Calhoun} \institute[]{
     \begin{columns}[t]
       \begin{column}{.48\linewidth}
         \begin{block}{\Large Abstract}
-          \raggedright Abstract here
+          \raggedright 
+          \begin{itemize}
+            \item Many structure learning algorithms are based on Granger causality
+            \item Granger causality is unreliable given undersampled time series data
+            \item We developed RASL to learn structure from undersampled data
+            \item In simulated data, RASL algorithms reveal causal timescale structure 
+              and improved measurement timescale learning 
+            \item RASL algorithms provide additional insight on fMRI data
+          \end{itemize}
+          
+          
         \end{block}
+
         \begin{block}{\Large Problems with ``Granger Causality''}
           \raggedright 
           \begin{itemize}
-          \item  Describe the problem
-          \item  NOTE: do not forget UNM and CMU logo (already added to logo folder but not sure where to place in poster)
-          \item 
+          \item \textbf{Granger causality}: $X$ Granger-causes $Y \equiv$ $X$'s 
+          history provides information about $Y$'s current state (beyond $Y$'s history)
+          
+          \item Mathematically: $Y^t = \sum_{i=1}^k \big[ \alpha_i Y^{t-i} + \beta_i X^{t-i} \big]$
+          is a significantly better predictor of $Y^t$ than
+          $Y^t = \sum_{i=1}^k \alpha_i Y^{t-i}$ (perhaps with covariates)
+           
+          \item Granger causality only reliable if key assumptions hold:
+          \begin{itemize}
+            \item \emph{Linearity} (but hemodynamic convolution does not create problems)
+            \item \emph{Causal sufficiency} (but becoming less of a problem)
+            \item \emph{Equal timescales} for both measurement and underlying causation
+            \end{itemize}
+           
+          \item \textbf{Undersampling}: Measurement timescale significantly slower than
+          causal or communication timescale 
+          \begin{itemize} \item Intermediate time points are unobserved \end{itemize}
+          
+          \item Granger causality can be arbitrarily wrong given undersampling
+          \begin{itemize}
+            \item $X$ GC $Y$ even though $Y$ actually causes $X$
+            \item $X$ GC $Y$ even though no direct causal connection
+            \item $X$ doesn't GC $Y$ even though $X$ actually causes $Y$
+            \end{itemize}
+          
+          \item Undersampling is a ubiquitous, persistent feature of fMRI data
+          
+          \item \textbf{Conclusion}: Structure learning algorithms based on Granger causality
+          are likely unreliable given fMRI data
           \end{itemize}
         \end{block}
+
         \begin{block}{\Large How to Overcome the Problems}
           \raggedright  
           \begin{itemize}
@@ -93,6 +132,9 @@ al.]{D. Danks, S.M. Plis, C. Freeman, A. Caprihan, V. D.  Calhoun} \institute[]{
       \begin{column}{.48\linewidth}
         \begin{block}{\Large Synthetic Data}
           \raggedright Talk about results and include pictures: \vskip5cm
+
+         NOTE: do not forget UNM and CMU logo (already added to logo folder but not sure where to place in poster)
+
           %\begin{tikzpicture}[overlay]
           %  \node[xshift=19cm] {\includegraphics[width=1\linewidth]{eqclass_size}};
           %\end{tikzpicture}
