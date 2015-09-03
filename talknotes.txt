@@ -1,0 +1,28 @@
+Knowing the causal graph allows for the calculation of the effects of actual and hypothetical manipulations of the variables of the system in question. To obtain a causal structure from data such as multiple time series, we use various discovery algorithms such as PC. Many of these discovery algorithms are based on Granger Causality where given the time series of two random variables, X and Y, we can better predict the future of Y than just given the time series of Y alone. However, Granger Causality can cause undersampling problems. 
+
+Point to undersampling picture
+
+This is the true causal timescale. Note that this is different from the causal structure which is obtained by a procedure called unrolling and marginalizing (see papers for more details). A data sequence is undersampled at rate u if the true causal timescale is t^0,t^1,t^2... but the measured timescale is t^0,t^u,t^2u. So when u=1, the measured timescale matches the true timescale. You might ask, can we undersample forever? Note that although u can be extended indefinitely for G, there exists a maximum u such that if we undersample the causal structure graph at any u greater than this max u, we will have already seen it before at a previous undersampling rate! Undersampling can present a problem in the causal structures created because they can lie! We might think X causes Y since there is an arrow from X to Y in the causal structure but due to undersampling Y should actually cause X!
+
+We developed several algorithms to handle undersampling given a causal strucutre. Given a graph H we obtain its equivalence class. The equivalence class of H is a set consisting of all graphs that when undersampled by some u can become H. We proceed with a recursive algorithm although we have also produced an iterative one that can be read in the paper. We make use of the fact that if we are given some G and we undersample it to get G^u and we find out that its edges are not a subset of H, then adding any additional edges to G is not going to help us. We call such graphs conflicting graphs. Thus we recurse into non conflicting graphs in order. Since this algorithm works for any u we call it rate AGNOSTIC strucutre learning.
+
+The recursive algorithm is slow but easier to understand than some of our other algorithms such as MSL whose results we show here. To learn details of MSL see the referred papers. Note that currently it only works for undersampling rate 2. To create some undersampled graphs H we start of with the actual graphs (called ground truths) and undersample them by 1 to get a bunch of G^2's to play with. This means we will never find an empty equivalence class.
+
+Point to box plot
+
+As can be seen when we increase the number of nodes in the actual graphs which in turn is also increasing the number of nodes in G^2, the time it takes to determine the equivalence class increases. Note that density here means edge density of the true causal strucutre. In addition we show the equivalence class sizes. In most cases the equivalence classes are quite small which is a good thing for a scientist! 
+
+Why? ask audience
+
+Because this means that the scientist can safely assume that he hasn't undersampled by too much and if he has, the possible true causal structures he can choose from are quite small. 
+
+Point to bar graph
+
+Now let's look at the undersampling rate instead of the number of nodes in the graph. We create 100 5 node graphs that are SCCS. This means for any two nodes, there is a way to get from one node to another. The higher the undersampling rate, the more diversity we see in our equivalence class sizes. Eventually we see a lot of supercliques where undersampling is so high that we hit a graph that has the maximum number of directed and bidirected edges.
+
+Point to final box plot
+
+Finally we add the step of learning the causal structure from data! We use strucutral vector autoregression which is one of many possible discovery algorithms for determining causal structure. Others include Greedy equivalence search or PC but we used SVAR because it was the most accurate. We made up some time series data and passed the SVAR output graph H to RASL. Unfortunately a lot of the graphs passed to RASL had empty equivalence classes. This would make sense since there are far more unreachable graphs (graphs without ground truths) than reachable graphs (graphs with ground truths). Thus if we find an empty equivalence class we either add or delete an edge from H and try again. We graph two kinds of errors: omission errors (the number of omitted edges so we deleted too much) and comission errors (the number of edges not present so we forgot an edge). We also wanted to see if SVAR errors would cause RASL errors. Interestingly, errors produced by SVAR did not increase RASL errors too much. Instead RASL seems to CORRECT for SVAR errors.  
+
+In conclusion, undersampling is a problem in creating causal structures from data and we hope to use our algorithms and findings in correcting for undersampling in FMRI data. For example standard FMRI experiments sample the brain's bloodflow every two seconds but the underlying neural activity (the major driver of bloodlflow) occurs much more rapidly.
+
