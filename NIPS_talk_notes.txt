@@ -1,0 +1,37 @@
+Summary of paper:
+
+Section 1: Introduction
+Dynamic causal systems are a major focus of scientific investigation. However, it is difficult to measure the variables at an appropriate timescale for the specific scientific domain. For example standard FMRI experiments sample the brain's bloodflow every two seconds but the underlying neural activity (the major driver of bloodlflow) occurs much more rapidly. Our research focuses on learning the causal structure of a system that evolves at timescale T_S given measurements at a timescale T_M where T_S is faster than T_M to an unknown degree. Previous work on this problem of undersampling assume that the degree of undersampling is known and small. We go over three different rate agnostic structure learning algorithms and explore their performance on synthetic data.
+
+
+Section 2: Representation and Formalism
+The dynamic causal graph model consists of a graph G over 2V many nodes where the only edges are from the previous time step V_(t-1)_i to the current timestep V_t_j. Thus, the true underlying causal system is Markov order 1. It is assumed that all causally relevant variables are measured. We also assume there are no isochronal edges (edges within the same time step) because it takes time for causal influences to occur. There is a conditional probability density/distribution P(V_t|V_(t-1)) which we assume to be time independent. We assume Markov and Faithfulness/Stability assumptions.
+
+We undersample at rate u when the measurement time steps are t^0,t^1...t^k... but we measure only the timesteps t^0,t^u,...t^uk...
+So when u=1, we measure all timesteps. The causal graph obtained from undersampling at rate u is denoted as G^u. Given G^1 we can get G^u by a computationally complex process called unrolling and marginalizing. Since it is complex, compressed graphs are frequently used. Compressed graphs encode temporal relations in the edges. It is easy to study the effects of undersampling on compressed graphs. A path of length u between nodes a and b is in the compressed graph G^1 if and only if an edge between a and b in the compressed graph G^u. A bidirected edge is in G^u if and only if there is a trek where the length of the separating paths is less than u in G^1. From now on, we refer to compressed graphs.
+
+
+Note: The Markov order of a system is the largest k such that V_(t-k)_i -> V_(t)_j
+
+Note: Markov: Variable V is independent of non descendants given parents
+
+Note: Faithfulness/Stability: The only independencies are those implied by Markov
+ 
+Note: trek: a pair of directed graphs (pi_1,pi_2) such that both have the same start variable
+
+Note: How do we undersample using dynamic causal graph models? See unrolling and marginalizing in the paper
+
+Note: How do we get a compressed graph from a dynamic causal graph model? See paper
+
+Note: How do we undersample with a compressed graph? Given in notes above but also in paper
+
+Section 3: Algorithms
+
+Suppose we are given H = G^u where we don't know what u is. Can we obtain G?   Given H, we obtain its equivalence class. The equivalence class of H is a set consisting of all graphs that when undersampled by some u can become H. If we try to obtain the equivalence class by brute force we would have to wade through 2^(n^2) possibilities of G^1 and u can be really large. Thus, we explore 3 different strategies to build the members of the equivalence class of H. 
+
+
+
+
+
+refer to wiml talk notes in PRNI poster folder
+
