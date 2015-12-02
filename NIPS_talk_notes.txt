@@ -1,37 +1,60 @@
-Summary of paper:
 
-Section 1: Introduction
+INTRO:
+
 Dynamic causal systems are a major focus of scientific investigation. However, it is difficult to measure the variables at an appropriate timescale for the specific scientific domain. For example standard FMRI experiments sample the brain's bloodflow every two seconds but the underlying neural activity (the major driver of bloodlflow) occurs much more rapidly. Our research focuses on learning the causal structure of a system that evolves at timescale T_S given measurements at a timescale T_M where T_S is faster than T_M to an unknown degree. Previous work on this problem of undersampling assume that the degree of undersampling is known and small. We go over three different rate agnostic structure learning algorithms and explore their performance on synthetic data.
 
+REPRESENTATIONS:
 
-Section 2: Representation and Formalism
 The dynamic causal graph model consists of a graph G over 2V many nodes where the only edges are from the previous time step V_(t-1)_i to the current timestep V_t_j. Thus, the true underlying causal system is Markov order 1. It is assumed that all causally relevant variables are measured. We also assume there are no isochronal edges (edges within the same time step) because it takes time for causal influences to occur. There is a conditional probability density/distribution P(V_t|V_(t-1)) which we assume to be time independent. We assume Markov and Faithfulness/Stability assumptions.
 
-We undersample at rate u when the measurement time steps are t^0,t^1...t^k... but we measure only the timesteps t^0,t^u,...t^uk...
-So when u=1, we measure all timesteps. The causal graph obtained from undersampling at rate u is denoted as G^u. Given G^1 we can get G^u by a computationally complex process called unrolling and marginalizing. Since it is complex, compressed graphs are frequently used. Compressed graphs encode temporal relations in the edges. It is easy to study the effects of undersampling on compressed graphs. A path of length u between nodes a and b is in the compressed graph G^1 if and only if an edge between a and b in the compressed graph G^u. A bidirected edge is in G^u if and only if there is a trek where the length of the separating paths is less than u in G^1. From now on, we refer to compressed graphs.
+We undersample at rate u when the time steps are t^0,t^1...t^k... but we measure only the timesteps t^0,t^u,...t^uk...
+So when u=1, we measure all timesteps. The causal graph obtained from undersampling at rate u is denoted as G^u. Given G^1 we can get G^u by a computationally complex process called unrolling and marginalizing. Since it is complex, compressed graphs are frequently used. Compressed graphs encode temporal relations in the edges. It is easy to study the effects of undersampling on compressed graphs. A path of length u between nodes a and b is in the compressed graph G^1 if and only if there is an edge between a and b in the compressed graph G^u. A bidirected edge is in G^u if and only if there is a trek where the length of the separating paths is less than u in G^1. From now on, we refer to compressed graphs.
 
+POTENTIAL QUESTIONS FOR REPRESENTATIONS:
 
-Note: The Markov order of a system is the largest k such that V_(t-k)_i -> V_(t)_j
+Q: What is a Markov order?
+A: The Markov order of a system is the largest k such that V_(t-k)_i -> V_(t)_j
 
-Note: Markov: Variable V is independent of non descendants given parents
+Q: What is the Markov assumption?
+A: Variable V is independent of non descendants given parents
 
-Note: Faithfulness/Stability: The only independencies are those implied by Markov
+Q: What are the Faithfulness/Stability assumption?
+A: The only independencies are those implied by Markov
  
-Note: trek: a pair of directed graphs (pi_1,pi_2) such that both have the same start variable
+Q: What is a trek?
+A: A pair of directed graphs (pi_1,pi_2) such that both have the same start variable
 
-Note: How do we undersample using dynamic causal graph models? See unrolling and marginalizing in the paper
+Q: How do you get a compressed graph given a dynamic causal graph model?
+A:
+1. use non time indexed nodes only
+2. V_i -> V_j in compressed graph iff V_(t-1)_i -> V_t_j in dynamic causal graph model
+3. V_i <-> V_j in compressed graph iff V_t_i <-> V_t_j in dynamic causal graph model
 
-Note: How do we get a compressed graph from a dynamic causal graph model? See paper
-
-Note: How do we undersample with a compressed graph? Given in notes above but also in paper
-
-Section 3: Algorithms
-
-Suppose we are given H = G^u where we don't know what u is. Can we obtain G?   Given H, we obtain its equivalence class. The equivalence class of H is a set consisting of all graphs that when undersampled by some u can become H. If we try to obtain the equivalence class by brute force we would have to wade through 2^(n^2) possibilities of G^1 and u can be really large. Thus, we explore 3 different strategies to build the members of the equivalence class of H. 
-
-
-
+Q: What is unrolling and marginalizing?
+A: To obtain G^u from G^1 for a dynamic causal graph model (not compressed) we perform unrolling and marginalizing:
+1. Unroll G^1 by introducing nodes for V_(t-2) that bear the same graphical and parametric relations to V_(t-1) as those variables bear to V_t and iterate until we have included V_(t-u).
+2. Marginalize out all variables except those in V_t and V_(t-u)
 
 
-refer to wiml talk notes in PRNI poster folder
+THEOREMS:
+
+Suppose we are given H = G^u where we don't know what u is. Can we obtain G?   Given H, we obtain its equivalence class. The equivalence class of H is a set consisting of all graphs that when undersampled by some u can become H. If we try to obtain the equivalence class by brute force we would have to wade through 2^(n^2) possibilities of G^1. In addition, u can be really large. 
+
+Thus, we explore 3 different strategies to build the members of the equivalence class of H. These strategies make use of several theorems we prove in the appendices of our paper. Suppose we are given some G. If G^u is not an edge subset of H for all u, then do not consider any edge superset of G because these conflicting graphs will never work. This puts a constraint on the G^1's we search through. Of course this begs the question: for all u? That still seems like a lot! Thus, we make use of another theorem. If G^u = G^v for some u>v then for all w > u, there exists v < u such that G^w = G^v. Thus, as u increases, if we find a graph that we previously encountered, then there cannot be any new graphs as u increases to infinity. This puts a constraint on u. 
+
+ALGORITHMS:
+
+Recursive edgewise inverse algorithm:
+We make use of the two constraint rules previously discussed. Start with an empty graph. For each edge e construct G^1 containing only e. If G^u is not an edge subset of H for all u then reject. If G^u = H for some u then add G^1 to the equivalence class for H. Recurse into non conflicing graphs in order. This is a DFS on the solution tree. The problem with this algorithm is that we end up constructing the same graph in many different ways. Adding edge 1 then edge 2 to an empty graph constructs the same graph as one that adds edge 2 then edge 1. Even with memoization, this is a very slow algorithm.
+
+Iterative edge centric inverse algorithm:
+To overcome the fact that the recursive algorithm constructs the same graph over and over, an iterative algorithm is created where at stage i, all nonconflicting G^1 with exactly i edges are considered. At stage i+1, the algorithms consider each graph G^1 in stage i with a single edge addition.  If there is a conflict, the G^1 with the extra edge is rejected. Otherwise, keep G^1 with the extra edge as an acceptable G^1 for stage i+1. If G^u = H for some u, then add then add the G to the equivalence class for H. The algorithm continues until there are no more edges to add. There are speed up and memory gains with this iterative algorithm over the recursive algorithm. In addition, we further optimize this algorithm by tracking the edges that cause conflicting graphs and never using that edge for further edge additions. We also make use of certain facts (Lemma 3.7 and 3.8 in the paper) to constrain u more. For example, if an edge from a to b is not in H, there cannot exist a path of length u in G^1.
+
+Iterative loop centric inverse algorithm:
+If H is an SCC, we can make an even faster algorithm. An SCC is a strongly connected component. This means for any two nodes, there is a way to get from one node to another. Non singleton SCCS can be decomposed into a set of (possibly overlapping) simple loops (no repeated nodes). Instead of adding non conflicting edges, we add non conflicting simple loops. By checking multiple constraints simultaneously, conflicting graphs are discovered earlier. Thus, we check fewer graphs and the algorithm is faster. The requirement that H be a SCC can easily be fulfilled if the time series is generated by a system with feedback loops.
+
+POTENTIAL QUESTIONS FOR ALGORITHMS:
+Q: What is the Big O for each algorithm?
+A: read extra paper suggested by sergey
+
 
