@@ -55,6 +55,28 @@ If H is an SCC, we can make an even faster algorithm. An SCC is a strongly conne
 
 POTENTIAL QUESTIONS FOR ALGORITHMS:
 Q: What is the Big O for each algorithm?
-A: read extra paper suggested by sergey
+A: The computational complexity of finding a single G^1 given a H is not easy to classify. Refer to AI stats manuscript section 3.1.
+
+RESULTS:
+For our simulated graphs, we use single SCC graphs for simplicity. We generated random SCCs by building a single simple loop over n many nodes and uniformly sampling from the remaining possible edges until we reach the specified edge density. 
+
+figure 3:
+We applied the 3 algorithms to the 100 random 5 node graphs at each of three densities. As expected, the iterative loop is faster than the iterative edge... and the recursive algorithm is the slowest algorithm as seen in figure 3.
+
+figure 4:
+When edge density increases of H increases, run time complexity increases. We generated 100 random 6 node SCCs which were then undersampled at rates u = 2,3,4 before being provided as input to RASL with iterated loops. Figure 4 summarizes computation time as a function of H's edge density with different plots based on density of G^1 and undersampling rate. We also show three examples of H with a range of computation runtime. 
+
+POSSIBLE QUESTION:
+Q: This graph (figure 4) is confusing
+A: The small numbers are the density of H (20,40,60,80). The big numbers are the density of the ground truth G^1 (20,25,30). The x axis is the undersampling rate u. The y axis is the computation time in minutes. 
+
+figure 5 and 6:
+Now we consider G^1 density
+
+figure 9:
+Finally we add the step of learning the causal structure from data! We use structural vector autoregression which is one of many possible discovery algorithms for determining causal structure. Others include Greedy equivalence search or PC but we used SVAR because it was the most accurate. 
+
+
+
 
 
